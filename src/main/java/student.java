@@ -1,13 +1,17 @@
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class student {
+public class student implements Serializable {
 
+    @Id
+    @GeneratedValue
     private Long id;
     private String name;
     private int age;
+
+    @OneToOne
+    public phone phoneNr;
 
     public student() {
     }
@@ -17,12 +21,24 @@ public class student {
         this.age = age;
     }
 
+    public student(String name, phone phone) {
+        this.name = name;
+        this.phoneNr = phone;
+    }
+
+    public phone getPhoneNr() {
+        return phoneNr;
+    }
+
+    public void setPhoneNr(phone phoneNr) {
+        this.phoneNr = phoneNr;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    @Id
-    @GeneratedValue
+
     public Long getId() {
         return id;
     }
@@ -43,9 +59,10 @@ public class student {
         this.age = age;
     }
 
+
     @Override
     public String toString() {
-        return "\nStudent ID: " + getId() + "\nName: " + getName() + "\nAge: " + getAge() + "\n";
+        return "ID: " + id + "\nName: " + name + "\n" + phoneNr;
     }
 
     @Override
